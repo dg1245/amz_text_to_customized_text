@@ -6,10 +6,10 @@ import json
 
 # Author: dg1245@qq.com
 # 出现错误自己解决，不提供售后，副作用未知，amz账号搞挂了自己负责
-# 思路：amz后台下载text--找到里面每个订单对应的url--下载zip压缩包并解压缩--解析json即可
+# 思路：amz后台下载txt--找到里面每个订单对应的url--下载zip压缩包并解压缩--解析json即可
 # 没有下载失败后重试的代码，自己添加
 # 这是好早之前写的代码了，只能获取下拉菜单和用户输入的文字
-突然发现json新增了version3.0，感觉解析起来会更简单，以后有空再更新
+# 突然发现json新增了version3.0，感觉解析起来会更简单，以后有空再更新
 
 # 每一个url下载后，压缩包都叫temp.zip
 # 下载前先把已经存在的temp.zip删掉
@@ -64,7 +64,7 @@ def unzip_and_get_json():
                 # first product - 2 pcs
                 # second product - 1 pcs
                 # len(customizationData) is 2, quantity is 2 and 1, totol quantity is 3
-                # 应该是这样的，好早之前写的代码了
+                # 应该是这样的，好早之前写的代码了，记忆模糊了
                 for i in range(len(customizationData)-1):
                     customized_option_data = customizationData[i]
                     print(customized_option_data['name'] + ": " + customized_option_data['optionSelection']['label'])
@@ -120,6 +120,7 @@ for file in files:
             for index, row in enumerate(reader):
                 # 测试为了效率，可以改成 if index == 1 只测试某订单号的数据是否有效显示
                 # if index == 1:
+                # 第0行是表头，所以index从1开始
                 if index in range(1, 999):
                     try:
                         # amz经常改版，记得更新对应的位置
@@ -131,7 +132,6 @@ for file in files:
                         # 现在只能看到城市，州，邮编，国家，看不到街道地址
                         address = ','.join(row[28:32])
 
-                        # if url":
                         if url:
                             print("#########################")
                             print('orderID:', orderID)
